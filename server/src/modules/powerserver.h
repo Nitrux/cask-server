@@ -1,10 +1,7 @@
-#ifndef POWERSERVER_H
-#define POWERSERVER_H
-
+#pragma once
 #include <QObject>
-#include "casklib_export.h"
 
-class CASKLIB_EXPORT PowerServer : public QObject
+class PowerServer : public QObject
 {
     Q_OBJECT
 public:
@@ -24,4 +21,3 @@ signals:
     void quit();
 };
 
-#endif // POWERSERVER_H

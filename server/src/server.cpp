@@ -2,9 +2,9 @@
 #include <QDBusConnectionInterface>
 #include <QDebug>
 
-#include "src/modules/background.h"
-#include "src/modules/theme.h"
-#include "src/modules/screen.h"
+#include "modules/powerserver.h"
+
+#define CASK_SERVER_ORG "org.cask.Server"
 
 Server::Server(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
@@ -21,27 +21,25 @@ bool Server::init()
 {
     QDBusConnectionInterface *iface = QDBusConnection::sessionBus().interface();
 
-    if(iface->isServiceRegistered("org.mauiman.Manager"))
+    if(iface->isServiceRegistered(CASK_SERVER_ORG))
     {
-        qWarning() << "Service is already registered";
+        qWarning() << "Cask Server is already registered";
         return false;
     }
 
-    auto registration = iface->registerService(QStringLiteral("org.mauiman.Manager"),
+    auto registration = iface->registerService(QStringLiteral(CASK_SERVER_ORG),
                                                QDBusConnectionInterface::ReplaceExistingService,
                                                QDBusConnectionInterface::DontAllowReplacement);
 
     if (!registration.isValid())
     {
         qWarning("2 Failed to register D-Bus service \"%s\" on session bus: \"%s\"",
-                 qPrintable("org.mauiman.Manager"),
+                 qPrintable(CASK_SERVER_ORG),
                  qPrintable(registration.error().message()));
 
         return false;
     }
 
-    m_modules << new Background(this);
-    m_modules << new Theme(this);
-    m_modules << new Screen(this);
+    m_modules << new PowerServer(this);
     return true;
 }

@@ -8,19 +8,13 @@ include_directories(
     )
 
 set(caskserver_HDRS
-    code/settingsstore.h
-    code/modules/backgroundmanager.h
-    code/modules/thememanager.h
-    code/modules/screenmanager.h
-    code/mauimanutils.h
+    caskpower.h
+    serverutils.h
     )
 
 set(caskserver_SRCS
-    code/settingsstore.cpp
-    code/modules/backgroundmanager.cpp
-    code/modules/thememanager.cpp
-    code/modules/screenmanager.cpp
-    code/mauimanutils.cpp
+    caskpower.cpp
+    serverutils.cpp
     )
 
 add_library(${PROJECT_NAME}
@@ -28,8 +22,6 @@ add_library(${PROJECT_NAME}
     ${caskserver_SRCS}
     ${caskserver_HDRS}
     )
-
-#add_library(MauiMan::MauiMan ALIAS MauiMan)
 
 generate_export_header(${PROJECT_NAME} BASE_NAME CaskServer)
 
