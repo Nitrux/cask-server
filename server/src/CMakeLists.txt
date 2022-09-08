@@ -7,16 +7,18 @@ include_directories(
 set(server_HDRS
     server.h
     modules/powerserver.h
+    modules/screenshotserver.h
     )
 
 set(server_SRCS
     main.cpp
     server.cpp
     modules/powerserver.cpp
+    modules/screenshotserver.cpp
     )
 
 qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Power.xml modules/powerserver.h PowerServer)
-#qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Screenshot.xml modules/screenshotserver.h Screenshot)
+qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Screenshot.xml modules/screenshotserver.h ScreenshotServer)
 #qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Shell.xml modules/shellserver.h Shell)
 
 set_source_files_properties(${DBUS_SOURCES} PROPERTIES SKIP_AUTOGEN ON)

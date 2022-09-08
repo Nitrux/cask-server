@@ -9,11 +9,13 @@ include_directories(
 
 set(caskserver_HDRS
     caskpower.h
+    caskscreenshot.h
     serverutils.h
     )
 
 set(caskserver_SRCS
     caskpower.cpp
+    caskscreenshot.cpp
     serverutils.cpp
     )
 

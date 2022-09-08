@@ -3,6 +3,7 @@
 #include <QDebug>
 
 #include "modules/powerserver.h"
+#include "modules/screenshotserver.h"
 
 #define CASK_SERVER_ORG "org.cask.Server"
 
@@ -15,7 +16,6 @@ Server::~Server()
 {
     qDeleteAll(m_modules);
 }
-
 
 bool Server::init()
 {
@@ -41,5 +41,7 @@ bool Server::init()
     }
 
     m_modules << new PowerServer(this);
+    m_modules << new ScreenshotServer(this);
+
     return true;
 }

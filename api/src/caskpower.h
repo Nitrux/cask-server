@@ -26,6 +26,7 @@ private slots:
     void onLogout();
     void onRestart();
     void onSleep();
+
 private:
     QDBusInterface *m_interface = nullptr;
     void sync(const QString &key, const QVariant &value =  QVariant());

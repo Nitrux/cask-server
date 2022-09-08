@@ -8,7 +8,7 @@ PowerServer::PowerServer(QObject *parent) : QObject(parent)
     new PowerAdaptor(this);
     if(!QDBusConnection::sessionBus().registerObject(QStringLiteral("/Power"), this))
     {
-        qDebug() << "FAILED TO REGISTER THEME DBUS OBJECT";
+        qDebug() << "FAILED TO REGISTER POWER DBUS OBJECT";
         return;
     }
 }
