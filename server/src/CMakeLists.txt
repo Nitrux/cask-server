@@ -42,5 +42,4 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::DBus
     )
 
-
 install(TARGETS ${PROJECT_NAME} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
