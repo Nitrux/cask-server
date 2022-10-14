@@ -2,23 +2,37 @@
 <node>
 <interface name="org.cask.Chrome">
 
+<property name="blurredList" type="as" access="read"/>
+<property name="shadowsList" type="as" access="read"/>
+
 <method name="blurBackground">
 <arg name="radius" type="i" direction="in"/>
-<arg name="id" type="i" direction="in"/>
+<arg name="id" type="s" direction="in"/>
 </method>
 
 <method name="dropShadow">
 <arg name="radius" type="i" direction="in"/>
-<arg name="id" type="i" direction="in"/>
+<arg name="id" type="s" direction="in"/>
 </method>
 
-<signal name="restartRequested">
+<method name="blurFor">
+<arg name="id" type="s" direction="in"/>
+<arg type="i" direction="out"/>
+</method>
+
+<method name="shadowFor">
+<arg name="id" type="s" direction="in"/>
+<arg type="i" direction="out"/>
+</method>
+
+<signal name="blurBackgroundFor">
+<arg name="radius" type="i" direction="in"/>
+<arg name="id" type="s" direction="in"/>
 </signal>
-<signal name="shutdownRequested">
-</signal>
-<signal name="logoutRequested">
-</signal>
-<signal name="sleepRequested">
+
+<signal name="dropShadowFor">
+<arg name="radius" type="i" direction="out"/>
+<arg name="id" type="s" direction="out"/>
 </signal>
 </interface>
 </node>

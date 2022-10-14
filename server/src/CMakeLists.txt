@@ -15,11 +15,12 @@ set(server_SRCS
     server.cpp
     modules/powerserver.cpp
     modules/screenshotserver.cpp
+    modules/chromeserver.cpp
     )
 
 qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Power.xml modules/powerserver.h PowerServer)
 qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Screenshot.xml modules/screenshotserver.h ScreenshotServer)
-#qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Shell.xml modules/shellserver.h Shell)
+qt5_add_dbus_adaptor(DBUS_SOURCES modules/org.cask.Chrome.xml modules/chromeserver.h ChromeServer)
 
 set_source_files_properties(${DBUS_SOURCES} PROPERTIES SKIP_AUTOGEN ON)
 

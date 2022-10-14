@@ -4,6 +4,7 @@
 
 #include "modules/powerserver.h"
 #include "modules/screenshotserver.h"
+#include "modules/chromeserver.h"
 
 #define CASK_SERVER_ORG "org.cask.Server"
 
@@ -42,6 +43,7 @@ bool Server::init()
 
     m_modules << new PowerServer(this);
     m_modules << new ScreenshotServer(this);
+    m_modules << new ChromeServer(this);
 
     return true;
 }
