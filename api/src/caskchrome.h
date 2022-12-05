@@ -30,5 +30,8 @@ private slots:
     void onBlurBackground(int radius, const QString &id);
 
 
+Q_SIGNALS:
+    void dropShadowChanged(int radius, const QString &id);
+
 };
 

@@ -40,6 +40,7 @@ void ChromeServer::dropShadow(int radius, const QString &id)
     }
     qDebug() << "REQUEST TO ADD DROP SHADOW FOR" << m_shadowsList;
 
+    qDebug() << "SERVER::SERVER DROP SHADOW CHANGED FOR" << id << radius;
     Q_EMIT dropShadowFor(radius, id);
 }
 

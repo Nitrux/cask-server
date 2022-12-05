@@ -26,13 +26,13 @@
 </method>
 
 <signal name="blurBackgroundFor">
-<arg name="radius" type="i" direction="in"/>
-<arg name="id" type="s" direction="in"/>
+<arg name="radius" type="i"/>
+<arg name="id" type="s"/>
 </signal>
 
 <signal name="dropShadowFor">
-<arg name="radius" type="i" direction="out"/>
-<arg name="id" type="s" direction="out"/>
+<arg name="radius" type="i"/>
+<arg name="id" type="s"/>
 </signal>
 </interface>
 </node>

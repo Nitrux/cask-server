@@ -3,9 +3,10 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QCoreApplication>
+#include <QDebug>
 
 CaskChrome::CaskChrome(QObject *parent) : QObject(parent)
-  ,m_appId(qApp->organizationName())
+  ,m_appId(qApp->organizationDomain()) //should be desktopFileName instead but needs to link to qguiapplication
 {
     auto server = new ServerUtils(this);
     if(server->serverRunning())
@@ -83,16 +84,15 @@ void CaskChrome::setConnections()
                                       QDBusConnection::sessionBus(), this);
     if (m_interface->isValid())
     {
-        connect(m_interface, SIGNAL(shutdownRequested()), this, SLOT(onShutdown()));
-        connect(m_interface, SIGNAL(logoutRequested()), this, SLOT(onLogout()));
-        connect(m_interface, SIGNAL(sleepRequested()), this, SLOT(onSleep()));
-        connect(m_interface, SIGNAL(restartRequested()), this, SLOT(onRestart()));
+        connect(m_interface, SIGNAL(dropShadowFor(int, QString)), this, SLOT(onDropShadow(int, QString)));
     }
 }
 
 void CaskChrome::onDropShadow(int radius, const QString &id)
 {
+    qDebug() << "SERVER::API DROP SHADOW CHANGED FOR" << id << radius;
 
+    Q_EMIT dropShadowChanged(radius, id);
 }
 
 void CaskChrome::onBlurBackground(int radius, const QString &id)
