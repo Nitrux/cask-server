@@ -8,6 +8,24 @@
 
 #define CASK_SERVER_ORG "org.cask.Server"
 
+
+#include <signal.h>
+
+void sigtermHandler(int signalNumber)
+{
+    qDebug() << "terminating CaskServer session" << signalNumber;
+    if (QCoreApplication::instance()) {
+        QCoreApplication::instance()->exit(-1);
+        qDebug() << "terminating CaskServer session FINISHED" << signalNumber;
+
+    }
+}
+
+void sigHandler(int signalNumber)
+{
+    qDebug() << "terminating CaskServer session" << signalNumber;
+}
+
 Server::Server(int &argc, char **argv) : QCoreApplication(argc, argv)
 {
 
@@ -40,6 +58,9 @@ bool Server::init()
 
         return false;
     }
+
+    signal(SIGTERM, sigtermHandler);
+    signal(SIGINT, sigHandler);
 
     m_modules << new PowerServer(this);
     m_modules << new ScreenshotServer(this);
