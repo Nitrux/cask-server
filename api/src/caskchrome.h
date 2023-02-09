@@ -13,6 +13,7 @@ public:
 
     Q_INVOKABLE void dropShadow(int radius, const QString &id = QString());
     Q_INVOKABLE void blurBackground(int radius, const QString &id = QString());
+    void setAppId(const QString &id);
 
 public slots:
     int blurFor(const QString &id);

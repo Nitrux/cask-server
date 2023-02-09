@@ -3,15 +3,17 @@
 
 #include <QDBusInterface>
 #include <QCoreApplication>
-
+#include <QDBusReply>
 #include <QDebug>
+#include <QCoreApplication>
+#include <QStandardPaths>
+#include <QDir>
 
-static QString appId()
-{
-    return QString::number(qApp->applicationPid());
-}
+#include "settingsstore.h"
 
 CaskScreenshot::CaskScreenshot(QObject *parent) : QObject(parent)
+  ,m_appId(qApp->organizationDomain()) //should be desktopFileName instead but needs to link to qguiapplication
+  ,m_settings(new SettingsStore(this))
 {
     auto server = new ServerUtils(this);
     if(server->serverRunning())
@@ -26,21 +28,33 @@ CaskScreenshot::CaskScreenshot(QObject *parent) : QObject(parent)
             this->setConnections();
         }
     });
+
+    loadSettings();
+}
+
+void CaskScreenshot::setAppId(const QString &id)
+{
+    m_appId = id;
+}
+
+QString CaskScreenshot::saveDir() const
+{
+    return m_saveDir;
 }
 
 void CaskScreenshot::grabAllScreens()
 {
-    sync("grabAllScreens", appId());
+    sync("grabAllScreens", m_appId);
 }
 
 void CaskScreenshot::grabCurrentScreen()
 {
-    sync("grabCurrentScreen", appId());
+    sync("grabCurrentScreen", m_appId);
 }
 
 void CaskScreenshot::grabCurrentWindow()
 {
-    sync("grabCurrentWindow", appId());
+    sync("grabCurrentWindow", m_appId);
 }
 
 void CaskScreenshot::setScreenshotReady(const QString &url, const QString &id)
@@ -49,6 +63,40 @@ void CaskScreenshot::setScreenshotReady(const QString &url, const QString &id)
     {
 
     }
+}
+
+QStringList CaskScreenshot::blacklisted()
+{
+    return m_blacklisted;
+}
+
+void CaskScreenshot::blacklist(const QString &id)
+{
+    if (m_interface && m_interface->isValid())
+    {
+        m_interface->call("blacklist", id);
+    }
+}
+
+void CaskScreenshot::unblacklist(const QString &id)
+{
+    if (m_interface && m_interface->isValid())
+    {
+        m_interface->call("unblacklist", id);
+    }
+}
+
+void CaskScreenshot::setSaveDir(const QString &saveDir)
+{
+    if (m_saveDir == saveDir)
+        return;
+
+    m_settings->save("SaveDir", m_saveDir);
+    sync("saveDir", m_saveDir);
+
+    m_saveDir = saveDir;
+
+    Q_EMIT saveDirChanged(m_saveDir);
 }
 
 void CaskScreenshot::onGrabAllScreensRequested(const QString &id)
@@ -65,6 +113,27 @@ void CaskScreenshot::onGrabCurrentScreenRequested(const QString &id)
 void CaskScreenshot::onGrabCurrentWindowRequested(const QString &id)
 {
     Q_EMIT this->takeScreenshot(Type::CurrentWindow, id);
+}
+
+void CaskScreenshot::onBlacklistedChanged(const QStringList &ids)
+{
+    qDebug() << "BLACKLISTED LIST CHANGED" << m_blacklisted << ids;
+    if(m_blacklisted == ids)
+        return;
+
+    m_blacklisted = ids;
+    m_settings->save("Blacklisted", m_blacklisted);
+
+    Q_EMIT blacklistedChanged(m_blacklisted);
+}
+
+void CaskScreenshot::onSaveDirChanged(const QString &url)
+{
+    if (m_saveDir == url)
+        return;
+
+    m_saveDir = url;
+    emit saveDirChanged(m_saveDir);
 }
 
 void CaskScreenshot::sync(const QString &key, const QVariant &value)
@@ -96,8 +165,25 @@ void CaskScreenshot::setConnections()
                                       QDBusConnection::sessionBus(), this);
     if (m_interface->isValid())
     {
+
         connect(m_interface, SIGNAL(grabAllScreensRequested(QString)), this, SLOT(onGrabAllScreensRequested(QString)));
         connect(m_interface, SIGNAL(grabCurrentScreenRequested(QString)), this, SLOT(onGrabCurrentScreenRequested(QString)));
         connect(m_interface, SIGNAL(grabCurrentWindowRequested(QString)), this, SLOT(onGrabCurrentWindowRequested(QString)));
+        connect(m_interface, SIGNAL(blacklistedChanged(QStringList)), this, SLOT(onBlacklistedChanged(QStringList)));
     }
+}
+
+void CaskScreenshot::loadSettings()
+{
+    m_settings->beginModule("Screenshot");
+
+    if(m_interface && m_interface->isValid())
+    {
+        m_blacklisted = m_interface->property("blacklisted").toStringList();
+        m_saveDir = m_interface->property("saveDir").toString();
+        return;
+    }
+
+    m_saveDir = m_settings->load("SaveDir", m_saveDir).toString();
+    m_blacklisted = m_settings->load("Blacklisted", m_blacklisted).toStringList();
 }

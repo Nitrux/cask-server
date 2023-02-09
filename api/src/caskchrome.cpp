@@ -33,6 +33,11 @@ void CaskChrome::blurBackground(int radius, const QString &id)
     sync("blurBackground", radius, id.isEmpty() ? m_appId : id);
 }
 
+void CaskChrome::setAppId(const QString &id)
+{
+    m_appId = id;
+}
+
 int CaskChrome::blurFor(const QString &id)
 {
     if(m_interface)

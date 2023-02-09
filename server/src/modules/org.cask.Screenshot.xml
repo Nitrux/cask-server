@@ -2,6 +2,9 @@
 <node>
 <interface name="org.cask.Screenshot">
 
+<property name="blacklisted" type="as" access="read"/>
+<property name="saveDir" type="s" access="read"/>
+
 <method name="grabAllScreens">
 <arg name="id" type="s" direction="in"/>
 </method>
@@ -12,6 +15,18 @@
 
 <method name="grabCurrentWindow">
 <arg name="id" type="s" direction="in"/>
+</method>
+
+<method name="blacklist">
+<arg name="id" type="s" direction="in"/>
+</method>
+
+<method name="unblacklist">
+<arg name="id" type="s" direction="in"/>
+</method>
+
+<method name="setSaveDir">
+<arg name="url" type="s" direction="in"/>
 </method>
 
 <signal name="screenshotReady">
@@ -28,6 +43,14 @@
 </signal>
 
 <signal name="grabCurrentWindowRequested">
+<arg type="s"/>
+</signal>
+
+<signal name="blacklistedChanged">
+<arg type="as"/>
+</signal>
+
+<signal name="saveDirChanged">
 <arg type="s"/>
 </signal>
 

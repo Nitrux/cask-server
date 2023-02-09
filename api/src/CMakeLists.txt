@@ -12,6 +12,8 @@ set(caskserver_HDRS
     caskscreenshot.h
     caskchrome.h
     serverutils.h
+    screenshotinhibit.h
+    settingsstore.h
     )
 
 set(caskserver_SRCS
@@ -19,6 +21,8 @@ set(caskserver_SRCS
     caskscreenshot.cpp
     caskchrome.cpp
     serverutils.cpp
+    screenshotinhibit.cpp
+    settingsstore.cpp
     )
 
 add_library(${PROJECT_NAME}
