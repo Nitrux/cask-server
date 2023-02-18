@@ -1,8 +1,9 @@
 #pragma once
 
 #include <QObject>
+#include "caskserver_export.h"
 
-class ServerUtils : public QObject
+class CASKSERVER_EXPORT ServerUtils : public QObject
 {
     Q_OBJECT
 public:
