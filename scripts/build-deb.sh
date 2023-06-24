@@ -64,7 +64,7 @@ checkinstall -D -y \
 	--pakdir=. \
 	--maintainer=probal31@gmail.com \
 	--provides=cask-server \
-	--requires="libc6,maui-manager-git \(\>= 2.2.2+git\)" \
+	--requires="libc6,maui-manager-git \(\>= 3.0.0+git\)" \
 	--nodoc \
 	--strip=no \
 	--stripso=yes \
