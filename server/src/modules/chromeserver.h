@@ -31,7 +31,7 @@ private:
     QHash<QString, int> m_blurredList;
     QHash<QString, int> m_shadowsList;
 
-signals:
+Q_SIGNALS:
     void blurBackgroundFor(int, QString);
     void dropShadowFor(int, QString);
 

@@ -27,9 +27,6 @@ public:
 
 private:
     QSettings *m_settings;
-
-signals:
-
 };
 
 

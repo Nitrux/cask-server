@@ -50,7 +50,7 @@ QStringList ChromeServer::shadowsList()
 
   for(const auto &key : m_shadowsList.keys())
   {
-      res << QString("%1:%2").arg(key, QString::number(m_shadowsList.value(key)));
+      res << QString(QStringLiteral("%1:%2")).arg(key, QString::number(m_shadowsList.value(key)));
   }
 
   return res;
@@ -62,7 +62,7 @@ QStringList ChromeServer::blurredList()
 
     for(const auto &key : m_blurredList.keys())
     {
-        res << QString("%1:%2").arg(key, QString::number(m_blurredList.value(key)));
+        res << QString(QStringLiteral("%1:%2")).arg(key, QString::number(m_blurredList.value(key)));
     }
 
     return res;

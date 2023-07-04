@@ -14,10 +14,10 @@
 void sigtermHandler(int signalNumber)
 {
     qDebug() << "terminating CaskServer session" << signalNumber;
-    if (QCoreApplication::instance()) {
+    if (QCoreApplication::instance())
+    {
         QCoreApplication::instance()->exit(-1);
         qDebug() << "terminating CaskServer session FINISHED" << signalNumber;
-
     }
 }
 
@@ -40,7 +40,7 @@ bool Server::init()
 {
     QDBusConnectionInterface *iface = QDBusConnection::sessionBus().interface();
 
-    if(iface->isServiceRegistered(CASK_SERVER_ORG))
+    if(iface->isServiceRegistered(QStringLiteral(CASK_SERVER_ORG)))
     {
         qWarning() << "Cask Server is already registered";
         return false;
@@ -53,7 +53,7 @@ bool Server::init()
     if (!registration.isValid())
     {
         qWarning("2 Failed to register D-Bus service \"%s\" on session bus: \"%s\"",
-                 qPrintable(CASK_SERVER_ORG),
+                 qPrintable(QStringLiteral(CASK_SERVER_ORG)),
                  qPrintable(registration.error().message()));
 
         return false;

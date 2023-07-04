@@ -1,11 +1,8 @@
 #include "settingsstore.h"
 #include <QSettings>
 
-static const QString ORG = "Maui";
-static const QString APP = "CaskServer";
-
 SettingsStore::SettingsStore(QObject *parent) : QObject(parent)
-  ,m_settings(new QSettings(ORG, APP, this))
+  ,m_settings(new QSettings(QStringLiteral("Maui"), QStringLiteral("CaskServer"), this))
 {
 }
 

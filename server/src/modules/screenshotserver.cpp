@@ -17,19 +17,19 @@ ScreenshotServer::ScreenshotServer(QObject *parent) : QObject(parent)
         return;
     }
 
-    m_saveDir = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)+"/Screenshots";
+    m_saveDir = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)+QStringLiteral("/Screenshots");
 
     SettingsStore settings;
-    settings.beginModule("Screenshot");
-    m_saveDir = settings.load("SaveDir", m_saveDir).toString();
-    m_blacklisted = settings.load("Blacklisted", m_blacklisted).toStringList();
+    settings.beginModule(QStringLiteral("Screenshot"));
+    m_saveDir = settings.load(QStringLiteral("SaveDir"), m_saveDir).toString();
+    m_blacklisted = settings.load(QStringLiteral("Blacklisted"), m_blacklisted).toStringList();
     settings.endModule();
 
     //Make sure to create the saveDir
     QDir dir(m_saveDir);
     if(!dir.exists())
     {
-        dir.mkpath(".");
+        dir.mkpath(QStringLiteral("."));
     }
 }
 
@@ -84,5 +84,5 @@ void ScreenshotServer::setSaveDir(QString saveDir)
         return;
 
     m_saveDir = saveDir;
-    emit saveDirChanged(m_saveDir);
+    Q_EMIT saveDirChanged(m_saveDir);
 }

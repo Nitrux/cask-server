@@ -13,10 +13,10 @@ public:
 
     static void startServer();
 
-signals:
-    void serverRunningChanged(bool state);
-
 private:
     bool m_serverRunning = false;
+
+Q_SIGNALS:
+    void serverRunningChanged(bool state);
 };
 

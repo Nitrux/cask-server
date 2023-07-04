@@ -4,8 +4,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
 
     ${CMAKE_CURRENT_SOURCE_DIR}/modules
-    ${CMAKE_CURRENT_BINARY_DIR}/modules
-    )
+    ${CMAKE_CURRENT_BINARY_DIR}/modules)
 
 set(caskserver_HDRS
     caskpower.h
@@ -13,8 +12,7 @@ set(caskserver_HDRS
     caskchrome.h
     serverutils.h
     screenshotinhibit.h
-    settingsstore.h
-    )
+    settingsstore.h)
 
 set(caskserver_SRCS
     caskpower.cpp
@@ -22,14 +20,12 @@ set(caskserver_SRCS
     caskchrome.cpp
     serverutils.cpp
     screenshotinhibit.cpp
-    settingsstore.cpp
-    )
+    settingsstore.cpp)
 
 add_library(${PROJECT_NAME}
     SHARED
     ${caskserver_SRCS}
-    ${caskserver_HDRS}
-    )
+    ${caskserver_HDRS})
 
 generate_export_header(${PROJECT_NAME} BASE_NAME CaskServer)
 
@@ -38,12 +34,10 @@ target_include_directories(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR};${CMAKE_CURRENT_BINARY_DIR};>")
 
-
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-    Qt5::Core
-    Qt5::DBus
-    )
+    Qt6::Core
+    Qt6::DBus)
 
 install(FILES
     ${caskserver_HDRS}

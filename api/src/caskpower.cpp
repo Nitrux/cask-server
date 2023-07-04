@@ -22,22 +22,22 @@ CaskPower::CaskPower(QObject *parent) : QObject(parent)
 
 void CaskPower::restart()
 {
-    sync("restart");
+    sync(QStringLiteral("restart"));
 }
 
 void CaskPower::logout()
 {
-    sync("logout");
+    sync(QStringLiteral("logout"));
 }
 
 void CaskPower::shutdown()
 {
-    sync("shutdown");
+    sync(QStringLiteral("shutdown"));
 }
 
 void CaskPower::sleep()
 {
-    sync("sleep");
+    sync(QStringLiteral("sleep"));
 }
 
 void CaskPower::onShutdown()
@@ -83,9 +83,9 @@ void CaskPower::setConnections()
         m_interface = nullptr;
     }
 
-    m_interface = new QDBusInterface ("org.cask.Server",
-                                      "/Power",
-                                      "org.cask.Power",
+    m_interface = new QDBusInterface (QStringLiteral("org.cask.Server"),
+                                      QStringLiteral("/Power"),
+                                      QStringLiteral("org.cask.Power"),
                                       QDBusConnection::sessionBus(), this);
     if (m_interface->isValid())
     {

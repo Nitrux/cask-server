@@ -12,7 +12,7 @@ public:
     Q_INVOKABLE void shutdown();
     Q_INVOKABLE void sleep();
 
-signals:
+Q_SIGNALS:
     void restartRequested();
     void logoutRequested();
     void shutdownRequested();

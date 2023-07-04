@@ -26,13 +26,13 @@ ServerUtils::ServerUtils(QObject *parent)
     connect(watcher, &QDBusServiceWatcher::serviceRegistered, [=](const QString &name) {
         qDebug() << "Connected to MauiMan server" << name;
         m_serverRunning = true;
-        emit serverRunningChanged(m_serverRunning);
+        Q_EMIT serverRunningChanged(m_serverRunning);
     });
 
     connect(watcher, &QDBusServiceWatcher::serviceUnregistered, [=](const QString &name) {
         qDebug() << "Disconnected to MauiMan server" << name;
         m_serverRunning = false;
-        emit serverRunningChanged(m_serverRunning);
+        Q_EMIT serverRunningChanged(m_serverRunning);
     });
 }
 
@@ -43,6 +43,6 @@ bool ServerUtils::serverRunning() const
 
 void ServerUtils::startServer()
 {
-    QProcess::startDetached("CaskServer", QStringList());
+    QProcess::startDetached(QStringLiteral("CaskServer"), QStringList());
 }
 

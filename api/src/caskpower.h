@@ -1,6 +1,8 @@
 #pragma once
+
 #include <QObject>
 #include <QVariant>
+
 #include "caskserver_export.h"
 
 class QDBusInterface;
@@ -15,13 +17,7 @@ public:
     Q_INVOKABLE void shutdown();
     Q_INVOKABLE void sleep();
 
-signals:
-    void restartRequested();
-    void logoutRequested();
-    void shutdownRequested();
-    void sleepRequested();
-
-private slots:
+private Q_SLOTS:
     void onShutdown();
     void onLogout();
     void onRestart();
@@ -30,9 +26,12 @@ private slots:
 private:
     QDBusInterface *m_interface = nullptr;
     void sync(const QString &key, const QVariant &value =  QVariant());
-    void setConnections();
+    void setConnections();    
 
-signals:
-
+Q_SIGNALS:
+    void restartRequested();
+    void logoutRequested();
+    void shutdownRequested();
+    void sleepRequested();
 };
 

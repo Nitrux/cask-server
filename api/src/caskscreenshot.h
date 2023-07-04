@@ -1,7 +1,9 @@
 #pragma once
+
 #include <QObject>
-#include "caskserver_export.h"
 #include <QVariant>
+
+#include "caskserver_export.h"
 
 class QDBusInterface;
 class SettingsStore;
@@ -26,7 +28,7 @@ public:
 
     QString saveDir() const;
 
-public slots:
+public Q_SLOTS:
     void grabAllScreens();
     void grabCurrentScreen();
     void grabCurrentWindow();
@@ -39,7 +41,7 @@ public slots:
 
     void setSaveDir(const QString &saveDir);
 
-private slots:
+private Q_SLOTS:
     void onGrabAllScreensRequested(const QString &id);
     void onGrabCurrentScreenRequested(const QString &id);
     void onGrabCurrentWindowRequested(const QString &id);
@@ -59,8 +61,7 @@ private:
 
     QString m_saveDir;
 
-
-signals:
+Q_SIGNALS:
     void takeScreenshot(Type type, QString id);
     void blacklistedChanged(QStringList blacklisted);
     void saveDirChanged(QString saveDir);

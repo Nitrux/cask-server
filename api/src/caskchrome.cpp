@@ -25,12 +25,12 @@ CaskChrome::CaskChrome(QObject *parent) : QObject(parent)
 
 void CaskChrome::dropShadow(int radius, const QString &id)
 {
-     sync("dropShadow", radius, id.isEmpty() ? m_appId : id);
+     sync(QStringLiteral("dropShadow"), radius, id.isEmpty() ? m_appId : id);
 }
 
 void CaskChrome::blurBackground(int radius, const QString &id)
 {
-    sync("blurBackground", radius, id.isEmpty() ? m_appId : id);
+    sync(QStringLiteral("blurBackground"), radius, id.isEmpty() ? m_appId : id);
 }
 
 void CaskChrome::setAppId(const QString &id)
@@ -42,7 +42,7 @@ int CaskChrome::blurFor(const QString &id)
 {
     if(m_interface)
     {
-        auto call= m_interface->asyncCallWithArgumentList("blurFor", {id});
+        auto call= m_interface->asyncCallWithArgumentList(QStringLiteral("blurFor"), {id});
         call.waitForFinished();
 
         QDBusReply<int> reply = call.reply();
@@ -56,7 +56,7 @@ int CaskChrome::shadowFor(const QString &id)
 {
     if(m_interface)
     {
-        auto call= m_interface->asyncCallWithArgumentList("shadowFor", {id});
+        auto call= m_interface->asyncCallWithArgumentList(QStringLiteral("shadowFor"), {id});
         call.waitForFinished();
 
         QDBusReply<int> reply = call.reply();
@@ -83,9 +83,9 @@ void CaskChrome::setConnections()
         m_interface = nullptr;
     }
 
-    m_interface = new QDBusInterface ("org.cask.Server",
-                                      "/Chrome",
-                                      "org.cask.Chrome",
+    m_interface = new QDBusInterface (QStringLiteral("org.cask.Server"),
+                                      QStringLiteral("/Chrome"),
+                                      QStringLiteral("org.cask.Chrome"),
                                       QDBusConnection::sessionBus(), this);
     if (m_interface->isValid())
     {
